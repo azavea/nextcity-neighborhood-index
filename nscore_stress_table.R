@@ -4,6 +4,7 @@ library(DT)
 #load neighborhood stress index csv
 nscores <- read.csv("final_neighborhood_scores_and_data.csv")
 
+#create data table
 datatable((nscores), class = 'stripe hover', options = list(
   initComplete = JS(
     "function(settings, json) {",
