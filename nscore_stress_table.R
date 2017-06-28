@@ -28,7 +28,7 @@ neighborhood_short_score_table <- datatable((nscores_shortTable),
   formatPercentage(c('crimeChange', 'incChange', 'popChange', 'povChangePercPoint', 'MHSDifPerc'), 1) %>%
   formatStyle(c('Neighborhood', 'category', 'crimeChange', 'incChange', 'popChange', 'povChangePercPoint', 'MHSDifPerc'), fontSize = '12px', fontFamily = 'helvetica') %>%
   formatStyle(c('Neighborhood'), fontWeight = 'bold') %>%
-  formatStyle('category',backgroundColor = styleEqual(c('Facing Challenges', 'Falling Behind', 'Keeping Pace', 'Making Progress', 'Ahead of the Game'), c('#1F0439', '#6F4D8F', '#9D88A6', '#DC7C4E', '#BB4107')))%>%
+  formatStyle('category',backgroundColor = styleEqual(c('Facing Challenges', 'Falling Behind', 'Keeping Pace', 'Making Progress', 'Ahead of the Game'), c('#BB4107', '#DC7C4E', '#9D88A6', '#6F4D8F', '#1F0439')))%>%
   formatStyle('category',color = '#FFF')
 
 
