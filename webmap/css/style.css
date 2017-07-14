@@ -33,7 +33,7 @@ will also have to create a sidebar html element*/
 }
 
 #name {
-  font-size: 25px;
+  font-size: 22px;
   display: inline-block;
 }
 
@@ -57,6 +57,8 @@ tr:nth-child(odd) {background-color: #4C4C4C}
     font-family: "HelveticaNeue-Bold", Helvetica, sans-serif;
     font-size: 12px;
 }*/
+
+
 
 .legend {
     line-height: 23px;
