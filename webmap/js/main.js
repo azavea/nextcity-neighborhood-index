@@ -19,32 +19,18 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
 
 //Style function to change style based on quantile breaks
 var Total_Style = function(feature) {
-  if (feature.properties.TotalScore <= -6){
+  if (feature.properties.TotalScore <= -7){
       return {fillColor: "#BB4107", fillOpacity: 0.7, color: "#BB4107", weight: 2};  }
   if (feature.properties.TotalScore <= -3){
       return {fillColor: "#DC7C4E", fillOpacity: 0.7, color: "#DC7C4E", weight: 2};  }
-  if (feature.properties.TotalScore <= 5){
+  if (feature.properties.TotalScore <= 2){
       return {fillColor: "#C1B5C6", fillOpacity: 0.7, color: "#9D88A6", weight: 2};  }
-  if (feature.properties.TotalScore <= 8){
+  if (feature.properties.TotalScore <= 6){
       return {fillColor: "#6F4D8F", fillOpacity: 0.7, color: "#6F4D8F", weight: 2};  }
   if (feature.properties.TotalScore <= 14){
       return {fillColor: "#1F0439", fillOpacity: 0.7, color: "#1F0439", weight: 2};  }
 
 };
-
-// var Total_Style = function(feature) {
-//   if (feature.properties.TotalScore <= -6){
-//       return {fillColor: "#C35B29", fillOpacity: 0.7, color: "#C35B29", weight: 2};  }
-//   if (feature.properties.TotalScore <= -3){
-//       return {fillColor: "#DC7C4E", fillOpacity: 0.7, color: "#DC7C4E", weight: 2};  }
-//   if (feature.properties.TotalScore <= 5){
-//       return {fillColor: "#DFF6F5", fillOpacity: 0.7, color: "#7BC0BD", weight: 2};  }
-//   if (feature.properties.TotalScore <= 8){
-//       return {fillColor: "#4C9A97", fillOpacity: 0.7, color: "#4C9A97", weight: 2};  }
-//   if (feature.properties.TotalScore <= 14){
-//       return {fillColor: "#1A716E", fillOpacity: 0.7, color: "#1A716E", weight: 2};  }
-//
-// };
 
 //Changing the opacity and line weight for when a feature is moused over
 var overStyle = {
@@ -66,10 +52,11 @@ var eachFeature = function(feature, layer) {
   layer.bindLabel("<div id='text'>" + "<div id='name'>" + layer.feature.properties.Neighborho +
   "</div>" + " is " + "<b>" + "<span id='category'>" + '<style>#category{background-color:' + layer.feature.properties.color + '; padding: 5px;}</style>' +
    layer.feature.properties.category + "</b>" + "</span>" + "</div>" +
-   "<br>" + "<table style='width:100%'>" + "<tr>" + "<td>Population Index</td>" + "<td>"+layer.feature.properties.PopScore + "</td>" + "</tr>" +
-   "<tr>" + "<td>Crime Index</td>" + "<td>" + layer.feature.properties.CrimeScore + "</td>" + "</tr>" +
-   "<tr>" + "<td>Median HH Income Index</td>" + "<td>"+layer.feature.properties.MHIScore + "</td>" + "</tr>" +
-   "<tr>" + "<td>Poverty Index</td>" + "<td>"+layer.feature.properties.PovScore + "</td>"+ "</tr>" + "</table>" );
+   "<br>" + "<table style='width:100%'>" + "<tr>" + "<td>Crime Index</td>" + "<td>"+layer.feature.properties.CrimeScore + "</td>" + "</tr>" +
+   "<tr>" + "<td>Median HH Income Index</td>" + "<td>" + layer.feature.properties.MHIScore + "</td>" + "</tr>" +
+   "<tr>" + "<td>Population Index</td>" + "<td>"+layer.feature.properties.PopScore + "</td>" + "</tr>" +
+   "<tr>" + "<td>Poverty Index</td>" + "<td>"+layer.feature.properties.PovScore + "</td>"+ "</tr>" +
+   "<tr>" + "<td>Home Price Index</td>" + "<td>"+layer.feature.properties.MHSScore + "</td>"+ "</tr>" + "</table>"  );
 
   /* =====================
   The following code will run every time a feature on the map is moused over.
@@ -97,7 +84,7 @@ var eachFeature = function(feature, layer) {
 };
 
 //Creating variable for the data
-var dataset = 'https://raw.githubusercontent.com/azavea/nextcity-neighborhood-index/master/phila_neighborhoods_stress_index_v3.geojson';
+var dataset = 'https://raw.githubusercontent.com/azavea/nextcity-neighborhood-index/master/phila_neighborhoods_stress_index_v4.geojson';
 
 //calling the data from github
 $.getJSON(dataset, function(response) {
@@ -112,12 +99,12 @@ $.getJSON(dataset, function(response) {
 
 //Function to assign the colors to the legend labels
 function getColor(d) {
-    return d == "Facing Challenges" ? '#BB4107' :
-           d == "Falling Behind"    ? '#DC7C4E' :
-           d == "Keeping Pace"      ? '#C1B5C6' :
-           d == "Making Progress"   ? '#6F4D8F' :
-           d == "Ahead of the Game" ? '#1F0439' :
-                                      '#FFEDA0';
+    return d == "Facing the Greatest Challenges" ? '#BB4107' :
+           d == "Falling Behind"                 ? '#DC7C4E' :
+           d == "Average"                        ? '#C1B5C6' :
+           d == "Advancing"                      ? '#6F4D8F' :
+           d == "Making the Greatest Advances"   ? '#1F0439' :
+                                                   '#FFEDA0';
 }
 
 
@@ -143,7 +130,7 @@ legend.onAdd = function (map) {
 
 //Creating the div for the legend
     var div = L.DomUtil.create('div', 'info legend title'),
-        grades = ["Facing Challenges", "Falling Behind", "Keeping Pace", "Making Progress", "Ahead of the Game" ];
+        grades = ["Facing the Greatest Challenges", "Falling Behind", "Average", "Advancing", "Making the Greatest Advances" ];
 
 //Legend label
     div.innerHTML += '<b>Score</b><br>';  // don't forget the break tag
