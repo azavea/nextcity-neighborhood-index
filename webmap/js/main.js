@@ -1,11 +1,14 @@
 /* =====================
 Leaflet Configuration
 ===================== */
+// A $( document ).ready() block.
+$( document ).ready(function() {
+
 
 //Creating the map
 var map = L.map('map', {
   center: [40.000, -75.1090],
-  zoom: 12
+  zoom: 11
 });
 
 //Adding the basemap
@@ -35,7 +38,7 @@ var Total_Style = function(feature) {
 //Changing the opacity and line weight for when a feature is moused over
 var overStyle = {
   fillOpacity: 0.3,
-  weight: 6,
+  weight: 4,
 };
 
 //Changing the opacity and line weight back to original
@@ -44,19 +47,36 @@ var outStyle = {
   weight: 2
 };
 
-//Creating a global variable to store the coordinates of each feature when it gets clicked on
+//Creating a global variable to store the coordinates of each feature when it gets clicked on, label var, and tooltip var
 var view = [];
+var label = [];
+var tooltip = [];
+
+var bounds = map.getBounds().pad(0.25); // slightly out of screen
+
+
 
 //Function that dictates what happens to each feature of the leaflet layer
 var eachFeature = function(feature, layer) {
-  layer.bindLabel("<div id='text'>" + "<div id='name'>" + layer.feature.properties.Neighborho +
-  "</div>" + " is " + "<b>" + "<span id='category'>" + '<style>#category{background-color:' + layer.feature.properties.color + '; padding: 5px;}</style>' +
-   layer.feature.properties.category + "</b>" + "</span>" + "</div>" +
+
+  label = ("<div id='text'>" +
+  "<div id='name'>" + layer.feature.properties.Neighborho + "</div>" +
+  " is " + "<b>" + "<span id='category'>" + '<style>#category{background-color:' + layer.feature.properties.color + '; padding: 5px;}</style>' + layer.feature.properties.category + "</b>" + "</span>" + "</div>" +
    "<br>" + "<table style='width:100%'>" + "<tr>" + "<td>Crime Index</td>" + "<td>"+layer.feature.properties.CrimeScore + "</td>" + "</tr>" +
    "<tr>" + "<td>Median HH Income Index</td>" + "<td>" + layer.feature.properties.MHIScore + "</td>" + "</tr>" +
    "<tr>" + "<td>Population Index</td>" + "<td>"+layer.feature.properties.PopScore + "</td>" + "</tr>" +
    "<tr>" + "<td>Poverty Index</td>" + "<td>"+layer.feature.properties.PovScore + "</td>"+ "</tr>" +
-   "<tr>" + "<td>Home Price Index</td>" + "<td>"+layer.feature.properties.MHSScore + "</td>"+ "</tr>" + "</table>"  );
+   "<tr>" + "<td>Home Price Index</td>" + "<td>"+layer.feature.properties.MHSScore + "</td>"+ "</tr>" + "</table>");
+
+  tooltip = L.tooltip({
+    noWrap: false,
+    sticky: true,
+    wrapScreen: true
+  })
+    .setContent(label)
+    .setLatLng(new L.LatLng(bounds.getNorth(), bounds.getCenter().lng));
+
+  layer.bindTooltip(tooltip).addTo(map);
 
   /* =====================
   The following code will run every time a feature on the map is moused over.
@@ -75,7 +95,7 @@ var eachFeature = function(feature, layer) {
     view.push(e.latlng.lat, e.latlng.lng);
 
     //setting the map view to center on clicked feature, zooming in to 14.
-    map.setView(view, 14);
+    map.setView(view, 12);
 
     //emptying the view variable so that it can be stored with new lat longs
     view = [];
@@ -107,23 +127,6 @@ function getColor(d) {
                                                    '#FFEDA0';
 }
 
-
-
-//We might use this later, if there are different colors for the borders, they will need to be added
-//separately to the legend
-
-// function getColor_border(d) {
-//     return d == "-12 to -6"? '#C35B29' :
-//            d == "-5 to -3" ? '#DC7C4E' :
-//            d == "-2 to -1" ? '#FEA77D' :
-//            d == "0"        ? '#DFF6F5' :
-//            d == "1 to 5"   ? '#7BC0BD' :
-//            d == "6 to 8"   ? '#4C9A97' :
-//            d == "9 to 14"  ? '#1A716E' :
-//                              '#FFEDA0';
-// }
-
-
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
@@ -133,7 +136,7 @@ legend.onAdd = function (map) {
         grades = ["Facing the Greatest Challenges", "Falling Behind", "Average", "Advancing", "Making the Greatest Advances" ];
 
 //Legend label
-    div.innerHTML += '<b>Score</b><br>';  // don't forget the break tag
+    div.innerHTML += '<b>Philadelphia Progress Index</b><br>';  // don't forget the break tag
 
 // loop through intervals and generate a label with a colored block for each interval
 //This is looking through the grades variable created above and pulling the corresponding color from the getColor function
@@ -147,3 +150,5 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);
+
+});

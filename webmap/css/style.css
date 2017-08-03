@@ -1,71 +1,55 @@
+
 body {
     padding: 0;
-    overflow: hidden;
-    font-family: colfax, helvetica, arial, sans-serif;
+    margin: 0;
+}
+html, body, #map {
+    height: 100vh;
+    width: 100vw;
 }
 
-p.main {
-  font-size: 24px;
-}
 
 .map {
     position: absolute;
     width: 100%;
-
-/*If we want a sidebar, comment out width: 100% and set the px for left and right below
-will also have to create a sidebar html element*/
-
-    /*right: 0px;
-    left: 400px;*/
     height: 100%;
     top: 0;
 }
 
-.leaflet-label {
-    background: rgba(91, 91, 91, 0.81);
+.leaflet-tooltip {
+    white-space: normal;
+    background: rgba(91, 91, 91, 0.9);
     color: #fff;
     font-family: "HelveticaNeue-Light", Helvetica, sans-serif;
-    font-size: 15px;
-    width: 260px;
+    width: 300px;
     border-radius: 0px;
     padding: 8px 8px 8px 8px;
-    /*border: 5px solid rgba(255,255,255,0.25);*/
+    border: 0px;
 }
 
 #name {
-  font-size: 22px;
-  display: inline-block;
+  font-size: 1.5em;
 }
 
 #text {
-  font-size: 18px;
+font-size: 1.2em;
 }
 
 td {
   padding-left: 5px;
+  font-size: 1.2em;
+
 }
 
 tr:nth-child(odd) {background-color: #4C4C4C}
-
-/*We might want this later to style legend p elements*/
-
-/*.leaflet-label p {
-    margin: 0;
-    padding: 0;
-    text-align: right;
-    float: right;
-    font-family: "HelveticaNeue-Bold", Helvetica, sans-serif;
-    font-size: 12px;
-}*/
-
 
 
 .legend {
     line-height: 23px;
     background: rgba(91, 91, 91, 0.81);
-    padding: 18px 18px 18px 18px;
+    padding: 14px 14px 14px 14px;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 1.2em;
     display: inline-block;
 }
 
@@ -86,15 +70,13 @@ tr:nth-child(odd) {background-color: #4C4C4C}
 }
 
 
-/*Potential css for a sidebar if we create one*/
+@media (max-width: 625px) {
 
-/*.sidebar {
-    position: absolute;
-    left: 0px;
-    width: 400px;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-    padding: 20px;
-    font-size: 16px;
-}*/
+  td {
+    display: none;
+  }
+
+  .leaflet-tooltip {
+      width: auto;
+  }
+}
