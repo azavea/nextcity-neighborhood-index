@@ -11,7 +11,14 @@ nscores_shortTable <- nscores[c(2,12,15,18,7,25,3)]
 
 #create data table as R object
 neighborhood_short_score_table <- datatable((nscores_shortTable), 
-  colnames=c("Neighborhood", "Crime Change", "Income Change", "Population Change", "Poverty Index", "Home Price Change", "Category"), rownames = FALSE, options = list(
+  colnames=c("Neighborhood", "Crime Change", "Income Change", "Population Change", "Poverty Index", "Home Price Change", "Category"), 
+  rownames = FALSE, 
+  options = list(
+    dom = 't',
+    autowidth = TRUE,
+    columnDefs = list((list(className = 'dt-center', targets = c(1,2,3,4,5,6)) )),
+    scrollCollapse=TRUE,
+    pageLength = 55,
     initComplete = JS(
       "function(settings, json) {",
       "$(this.api().table().header()).css({'background-color': '#5B5B5B', 'color': '#fff', 'font-family': 'helvetica', 'font-size': '12px'});",
@@ -25,4 +32,3 @@ neighborhood_short_score_table <- datatable((nscores_shortTable),
 
 #save the widget as an html page
 saveWidget(neighborhood_short_score_table, "score_table.html", selfcontained = FALSE, libdir = "src")
-
